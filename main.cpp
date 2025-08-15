@@ -13,11 +13,11 @@ map<string, float> car_weight;
 map<string, float> bike_weight;
 
 // Hidden layer neurons for each category
-float hidden1_car = 0.0, hidden2_car = 0.0;
-float hidden1_bike = 0.0, hidden2_bike = 0.0;
+float hidden1_car = 0.0, hidden2_car = 0.0, hidden3_car = 0.0;
+float hidden1_bike = 0.0, hidden2_bike = 0.0, hidden3_bike = 0.0;
 
 int main() {
-    for(int epoch = 0; epoch < 10; epoch++){
+    for(int epoch = 0; epoch < 20; epoch++){
       TrainModel();
     }
 

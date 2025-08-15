@@ -8,66 +8,21 @@
 #include <map>
 #include <algorithm>
 #include "DetectType.hpp"
+#include "DataSet.hpp"
+
 using namespace std;
 
 extern map<string, float> car_weight;
 extern map<string, float> bike_weight;
-
+extern vector<pair<string, string>> train_data;
+extern vector<string> car_words;
+extern vector<string> bike_words;
 // Forward declarations for Detect functions
 float DetectCar(string input);
 float DetectBike(string input);
 
 // TrainModel function
 inline void TrainModel() {
-    vector<pair<string, string>> train_data = {
-        {"I washed my car yesterday", "car"},
-        {"My car has a sunroof", "car"},
-        {"The engine of my car is loud", "car"},
-        {"My four_wheeler broke down", "car"},
-        {"I bought new tires for my car", "car"},
-        {"My vehicle is parked outside", "car"},
-        {"Cars are fun to drive", "car"},
-        {"My car consumes a lot of fuel", "car"},
-        {"I took my car for a long drive", "car"},
-        {"The gears of my car are smooth", "car"},
-        {"I love riding my mountainbike", "bike"},
-        {"My pedals are broken on my bike", "bike"},
-        {"I bought a new helmet for biking", "bike"},
-        {"Bikes are easy to park", "bike"},
-        {"My bike tires need air", "bike"},
-        {"Superbikes are very fast", "bike"},
-        {"I rode my bike uphill today", "bike"},
-        {"I cleaned my bike yesterday", "bike"},
-        {"Mountain bikes are good for trails", "bike"},
-        {"Pedal harder to move faster", "bike"},
-        {"The sedan is parked outside", "car"},
-        {"I love my SUV for long trips", "car"},
-        {"Hatchbacks are easy to drive", "car"},
-        {"Trucks carry heavy loads", "car"},
-        {"My scooter is very convenient", "bike"},
-        {"I fixed the chain on my bike", "bike"},
-        {"The sports car has new tires", "car"},
-        {"I went off-road with my mountainbike", "bike"},
-        {"I drove my truck to the city", "car"},
-        {"The electric bike is very quiet", "bike"},
-        {"My hybrid car saves fuel", "car"},
-        {"I enjoyed a ride on my superbike", "bike"},
-        {"I checked the brakes on my car", "car"},
-        {"The bike needs oil for smooth riding", "bike"}
-    };
-
-    vector<string> car_words = {
-        "car", "cars", "motor", "motor_vehicle", "four_wheeler", "vehicle",
-        "gear", "gears", "tires", "fuel", "engine", "sunroof", "sedan",
-        "suv", "hatchback", "truck", "hybrid", "sports", "brakes"
-    };
-
-    vector<string> bike_words = {
-        "bike", "bikes", "superbike", "mountainbike", "pedals", "pedal",
-        "gear", "gears", "tires", "fuel", "helmet", "scooter", "chain",
-        "off-road", "electric", "ride", "brakes", "oil"
-    };
-
     float learning_rate = 0.1;
 
     // Initialize all words in weight maps
