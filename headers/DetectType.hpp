@@ -34,52 +34,50 @@ inline float sigmoid_derivative(float x) {
 }
 
 // Detect functions
-inline float DetectCar(string input) {
+inline float DetectVehicle(string input, map<string, float>& weights, 
+                           float& h1, float& h2, float& h3, float& h4, float& h5) {
+    transform(input.begin(), input.end(), input.begin(), ::tolower);
     stringstream ss(input);
     string word;
-    hidden1_car = hidden2_car = hidden3_car = hidden4_car = hidden5_car = 0.0;
+    h1 = h2 = h3 = h4 = h5 = 0.0f;
+    bool negation = false;
 
     while (ss >> word) {
-        hidden1_car += car_weight[word];
-        hidden2_car += car_weight[word] * 0.6;
-        hidden3_car += car_weight[word] * 0.4;
-        hidden4_car += car_weight[word] * 0.3;
-        hidden5_car += car_weight[word] * 0.2;
+        if (word == "not" || word == "never" || word == "don't" || word == "no" || word == "not a") {
+            negation = true;
+            continue;
+        }
+       
+        if (word == "a" && negation) {
+            string next;
+            if (ss >> next) word += " " + next; // join for lookup
+        }
+        
+        float w = weights[word];
+        if (negation) {
+            w = -w;
+            negation = false;
+        }
+
+        h1 += w;
+        h2 += w * 0.6f;
+        h3 += w * 0.4f;
+        h4 += w * 0.3f;
+        h5 += w * 0.2f;
     }
 
-    // Hidden activations (ReLU or Sigmoid – you can switch)
-    hidden1_car = relu(hidden1_car);
-    hidden2_car = relu(hidden2_car);
-    hidden3_car = relu(hidden3_car);
-    hidden4_car = relu(hidden4_car);
-    hidden5_car = relu(hidden5_car);
+    h1 = relu(h1); h2 = relu(h2); h3 = relu(h3); h4 = relu(h4); h5 = relu(h5);
 
-    // Final output layer with sigmoid
-    float output = hidden1_car * 1.0 + hidden2_car * 0.8 + hidden3_car * 0.5 + hidden4_car * 0.3 + hidden5_car * 0.2;
+    float output = h1 * 1.0f + h2 * 0.8f + h3 * 0.5f + h4 * 0.3f + h5 * 0.2f;
     return sigmoid(output);
 }
 
+inline float DetectCar(string input) {
+    return DetectVehicle(input, car_weight, hidden1_car, hidden2_car, hidden3_car, hidden4_car, hidden5_car);
+}
+
 inline float DetectBike(string input) {
-    stringstream ss(input);
-    string word;
-    hidden1_bike = hidden2_bike = hidden3_bike = hidden4_bike = hidden5_bike = 0.0;
-
-    while (ss >> word) {
-        hidden1_bike += bike_weight[word];
-        hidden2_bike += bike_weight[word] * 0.6;
-        hidden3_bike += bike_weight[word] * 0.4;
-        hidden4_bike += bike_weight[word] * 0.3;
-        hidden5_bike += bike_weight[word] * 0.2;
-    }
-
-    hidden1_bike = relu(hidden1_bike);
-    hidden2_bike = relu(hidden2_bike);
-    hidden3_bike = relu(hidden3_bike);
-    hidden4_bike = relu(hidden4_bike);
-    hidden5_bike = relu(hidden5_bike);
-
-    float output = hidden1_bike * 1.0 + hidden2_bike * 0.8 + hidden3_bike * 0.5 + hidden4_bike * 0.3 + hidden5_bike * 0.2;
-    return sigmoid(output);
+    return DetectVehicle(input, bike_weight, hidden1_bike, hidden2_bike, hidden3_bike, hidden4_bike, hidden5_bike);
 }
 
 #endif
