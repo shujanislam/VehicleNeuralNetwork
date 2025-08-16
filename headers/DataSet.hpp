@@ -262,15 +262,20 @@ inline vector<pair<string, string>> train_data = {
     {"My hatchback and scooter are both ready for weekend rides", "car bike"},
     {"I drove my sedan and rode my mountainbike along the trail", "car bike"},
     {"I polished my convertible and cleaned my electric bike", "car bike"},
-    {"I checked my hybrid car and scooter today", "car bike"}
+    {"I checked my hybrid car and scooter today", "car bike"},
+    {"four wheels are good and fast", "car"},
+    {"my whip is in the garage", "car"},
+    {"my four wheeler is pretty loud", "car"},
+    {"my two wheeler is very expensive", "bike"},
+    {"my two wheel is clean", "bike"},
 };
 
 // Expanded word lists
 inline vector<string> car_words = {
-    "car","cars","motor","motor_vehicle","four_wheeler","vehicle","engine",
+    "car","cars","motor","motor_vehicle","four_wheeler", "four", "four wheel", "four wheeler", "wheels", "whip","vehicle","engine",
     "tires","gear","gears","sunroof","sedan","suv","hatchback","truck",
     "hybrid","sports","brakes","stereo","seat","highway","refuel","steering",
-    "speed","trunk","dashboard","whip","automobile","convertible","coupe"
+    "speed","trunk","dashboard","whip","automobile","convertible","coupe", "two", "two wheels", "two wheeler"
 };
 
 inline vector<string> bike_words = {
